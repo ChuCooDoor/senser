@@ -2,14 +2,15 @@ import rp from 'request-promise-native';
 import rpio from 'rpio';
 
 class RPISenser {
-  constructor(id, serverUrl) {
-    this.id = id;
+  constructor(boardId, serverUrl) {
+    this.boardId = boardId;
+    this.boardPin = boardPin;
     this.serverUrl = serverUrl;
     this.boardValue = -1;
 
-    rpio.open(this.deviceInfo.boardPin, rpio.INPUT, rpio.PULL_DOWN);
+    rpio.open(this.boardPin, rpio.INPUT, rpio.PULL_DOWN);
     this.onCheck();
-    rpio.poll(this.deviceInfo.boardPin, (cbpin) => {this.pollcb(cbpin);});
+    rpio.poll(this.boardPin, (cbpin) => {this.pollcb(cbpin);});
   }
 
   pollcb(cbpin) {
@@ -25,7 +26,7 @@ class RPISenser {
   }
 
   check() {
-    this.boardValue = rpio.read(this.deviceInfo.boardPin);
+    this.boardValue = rpio.read(this.boardPin);
     this.log('boardValue: ' + this.boardValue);
 
     this.sendStatus()
@@ -42,7 +43,7 @@ class RPISenser {
       method: 'POST',
       uri: `http://${this.serverUrl}/updateStatus`,
       body: {
-        id: this.id,
+        boardId: this.boardId,
         boardValue: this.boardValue
       },
       json: true // Automatically stringifies the body to JSON
