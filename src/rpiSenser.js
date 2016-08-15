@@ -2,7 +2,7 @@ import rp from 'request-promise-native';
 import rpio from 'rpio';
 
 class RPISenser {
-  constructor(boardId, serverUrl) {
+  constructor(boardId, boardPin, serverUrl) {
     this.boardId = boardId;
     this.boardPin = boardPin;
     this.serverUrl = serverUrl;
