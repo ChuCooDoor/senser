@@ -11,6 +11,7 @@ class RPISenser {
     rpio.open(this.boardPin, rpio.INPUT, rpio.PULL_DOWN);
     this.onCheck();
     rpio.poll(this.boardPin, (cbpin) => {this.pollcb(cbpin);});
+    this.log('開始監控');
   }
 
   pollcb(cbpin) {
@@ -26,16 +27,27 @@ class RPISenser {
   }
 
   check() {
+    let initBoardValue = this.boardValue;
     this.boardValue = rpio.read(this.boardPin);
-    this.log('boardValue: ' + this.boardValue);
 
-    this.sendStatus()
-      .then(function (message) {
-        this.log('sendStatus 成功: ' + message);
-      })
-      .catch(function (error) {
-        this.log('sendStatus 失敗: ' + error);
-      });
+    if (initBoardValue != -1) {
+      this.log('boardValue: ' + this.boardValue);
+      this.sendStatus()
+        .then(message => {
+          this.log( 'sendStatus 成功: ' + JSON.stringify(message) );
+        })
+        .catch(error => {
+          this.log( 'sendStatus 失敗: ' + JSON.stringify(error) );
+        });
+    }
+  }
+
+  getBoardId() {
+    return this.boardId;
+  }
+
+  getBoardValue() {
+    return this.boardValue;
   }
 
   sendStatus() {
