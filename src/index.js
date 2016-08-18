@@ -2,7 +2,7 @@ import Http from 'http';
 import Router from 'router';
 import BodyParser from 'body-parser';
 import RPISenser from './rpiSenser.js';
-import { boardId, boardPin, serverUrl } from './env.js';
+import { boardId, boardPin, serverUrl, serverPort } from './env.js';
 
 const senser = new RPISenser(boardId, boardPin, serverUrl);
 
@@ -45,4 +45,4 @@ const server = Http.createServer(function(request, response) {
   });
 })
 
-server.listen(3001);
+server.listen(serverPort);
