@@ -1,5 +1,6 @@
 import rp from 'request-promise-native';
 import rpio from 'rpio';
+import Logger from './logger.js';
 
 class RPISenser {
   constructor(boardId, boardPin, serverUrl) {
@@ -7,6 +8,7 @@ class RPISenser {
     this.boardPin = boardPin;
     this.serverUrl = serverUrl;
     this.boardValue = -1;
+    this.logger = new Logger();
 
     rpio.open(this.boardPin, rpio.INPUT, rpio.PULL_DOWN);
     this.onCheck();
@@ -65,15 +67,7 @@ class RPISenser {
   }
 
   log(text) {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const day = date.getDate();
-    const hours = date.getHours();
-    const min = date.getMinutes();
-    const dateTimeText = `${year}/${month}/${day} ${hours}:${min}`;
-
-    console.log(`${dateTimeText}: ${text}`);
+    this.logger.log(text);
   }
 }
 
