@@ -2,7 +2,7 @@ import rp from 'request-promise-native';
 import rpio from 'rpio';
 import Logger from './logger.js';
 
-class RPISenser {
+class RPIsensor {
   constructor(boardId, boardPin, serverUrl, sensorDelayTime) {
     this.boardId = boardId;
     this.boardPin = boardPin;
@@ -72,4 +72,4 @@ class RPISenser {
   }
 }
 
-export { RPISenser as default };
+export { RPIsensor as default };

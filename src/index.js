@@ -1,14 +1,14 @@
 import Http from 'http';
 import Router from 'router';
 import BodyParser from 'body-parser';
-import RPISenser from './rpiSenser.js';
+import RPIsensor from './rpisensor.js';
 import Logger from './logger.js';
-import { boardId, boardPin, serverUrl, senserPort, sensorDelayMillisecond } from './env.js';
+import { boardId, boardPin, serverUrl, sensorPort, sensorDelayMillisecond } from './env.js';
 
 const logger = new Logger('System');
-const senser = new RPISenser(boardId, boardPin, serverUrl, sensorDelayMillisecond);
+const sensor = new RPIsensor(boardId, boardPin, serverUrl, sensorDelayMillisecond);
 
-// server for rpi-senser
+// server for rpi-sensor
 let router = new Router();
 router.use(BodyParser.json());
 
@@ -16,14 +16,14 @@ router.get('/boardValue/:boardId', function (request, response) {
   let boardId = request.params.boardId;
   logger.log(`收到取得狀態要求 boardId:${boardId}`);
 
-  if ( boardId != senser.getBoardId() ) {
+  if ( boardId != sensor.getBoardId() ) {
     response.writeHead( 404, {
       'Content-Type' : 'application/json; charset=utf-8'
     });
     response.end( JSON.stringify({message: 'Not Found'}) );
   } else {
     let result = {
-      boardValue: senser.getBoardValue()
+      boardValue: sensor.getBoardValue()
     }
     response.writeHead( 200, {
       'Content-Type' : 'application/json; charset=utf-8'
@@ -47,4 +47,4 @@ const server = Http.createServer(function(request, response) {
   });
 })
 
-server.listen(senserPort);
+server.listen(sensorPort);
