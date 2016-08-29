@@ -1,8 +1,8 @@
+import Moment from 'moment';
+
 class Logger {
   log(text) {
-    const date = new Date();
-    const dateText = date.toLocaleString('zh-TW');
-
+    const dateText = moment().format( 'YYYY/MM/DD HH:mm:ss')
     console.log(`${dateText}: ${text}`);
   }
 }
