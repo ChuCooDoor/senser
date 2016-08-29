@@ -3,10 +3,11 @@ import rpio from 'rpio';
 import Logger from './logger.js';
 
 class RPISenser {
-  constructor(boardId, boardPin, serverUrl) {
+  constructor(boardId, boardPin, serverUrl, sensorDelayTime) {
     this.boardId = boardId;
     this.boardPin = boardPin;
     this.serverUrl = serverUrl;
+    this.sensorDelayTime = sensorDelayTime;
     this.boardValue = -1;
     this.logger = new Logger();
 
@@ -25,7 +26,7 @@ class RPISenser {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    this.timer = setTimeout( () => {this.check();}, 2000);
+    this.timer = setTimeout( () => {this.check();}, this.sensorDelayMillisecond);
   }
 
   check() {

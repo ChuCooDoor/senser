@@ -3,10 +3,10 @@ import Router from 'router';
 import BodyParser from 'body-parser';
 import RPISenser from './rpiSenser.js';
 import Logger from './logger.js';
-import { boardId, boardPin, serverUrl, senserPort } from './env.js';
+import { boardId, boardPin, serverUrl, senserPort, sensorDelayMillisecond } from './env.js';
 
 const logger = new Logger('System');
-const senser = new RPISenser(boardId, boardPin, serverUrl);
+const senser = new RPISenser(boardId, boardPin, serverUrl, sensorDelayMillisecond);
 
 // server for rpi-senser
 let router = new Router();
