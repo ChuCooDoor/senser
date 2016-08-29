@@ -1,7 +1,7 @@
 import Http from 'http';
 import Router from 'router';
 import BodyParser from 'body-parser';
-import RPIsensor from './rpisensor.js';
+import RPIsensor from './rpiSensor.js';
 import Logger from './logger.js';
 import { boardId, boardPin, serverUrl, sensorPort, sensorDelayMillisecond } from './env.js';
 
